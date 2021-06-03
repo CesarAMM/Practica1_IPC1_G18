@@ -1,7 +1,7 @@
 /*
     Cesar  Mazariegos
     Cristopher Mazariegos 
-    Ana Ordóñez 02/06/2021
+    Ana Ordóñez 02/06/20211
     Oscar Muz 
  */
 package practica_1_ipc_1;
