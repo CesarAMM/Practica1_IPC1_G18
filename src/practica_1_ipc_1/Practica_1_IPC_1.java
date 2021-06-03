@@ -1,7 +1,7 @@
 /*
-    Cesar  Mazariegos 03/06/2021: modificaciones en el main para el menu
-    Cristopher Mazariegos 
-    Ana Ordóñez 02/06/20211
+    Cesar  Mazariegos 
+    Cristopher Mazariegos Multiplicar  yDividir
+    Ana Ordóñez Sumar yResta
     Oscar Muz 
  */
 
