@@ -1,8 +1,13 @@
 /*
-    Cesar  Mazariegos
+    Cesar  Mazariegos 02/06/2021
     Cristopher Mazariegos 
+<<<<<<< HEAD
     Ana Ordóñez 02/06/20211
     Oscar Muz 
+=======
+    Ana Ordóñez 
+    Oscar Muz
+>>>>>>> 1ceef48024179fbd92b2c3b1fb2a29f37f338982
  */
 
 
