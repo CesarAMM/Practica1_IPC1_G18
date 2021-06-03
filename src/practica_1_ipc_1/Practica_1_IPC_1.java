@@ -4,6 +4,15 @@
     Ana Ordóñez 
     Oscar Muz 
  */
+
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
+/*este es un cometario de prueba departe de Oscar*/
 package practica_1_ipc_1;
 
 
