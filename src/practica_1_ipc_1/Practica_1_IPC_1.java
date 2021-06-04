@@ -9,6 +9,7 @@ package practica_1_ipc_1;
 
 import java.io.File;
 import java.util.Scanner;
+import static practica_1_ipc_1.Funciones_Cesar.Mtriz_transpuesta;
 
 
 public class Practica_1_IPC_1 {
@@ -74,6 +75,15 @@ public class Practica_1_IPC_1 {
                     case 6:
                         break;
                     case 7:
+                        String strMatriz;
+                        do{
+                            scanner = new Scanner(System.in);
+                            String indice;
+                            System.out.print("--> Ingrese la matriz: ");
+                            indice = scanner.nextLine();
+                            strMatriz = ValidarMatriz(matriz, indice); 
+                        }while(strMatriz.length() == 0);
+                        Mtriz_transpuesta(strMatriz);
                         break;
                     case 8:
                         break;
@@ -155,6 +165,16 @@ public class Practica_1_IPC_1 {
                 System.out.println("Matriz: " + pintar);
             }
         }
+    }
+    
+    public static String ValidarMatriz(String[][] matriz, String i){
+        for (int j = 0; j < matriz.length; j++) {
+            if(matriz[j][0] != null && matriz[j][0].equals(i)){
+               return matriz[j][1];
+            }
+        }
+        System.out.println("La matriz no existe.");
+        return "";
     }
 }
 
