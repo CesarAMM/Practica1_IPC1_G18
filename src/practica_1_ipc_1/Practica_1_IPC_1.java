@@ -109,14 +109,16 @@ public class Practica_1_IPC_1 {
             String matrizAux = Cadena.split("\n")[i].split(":")[1].replace(" ", "");//La matriz
             String[] auxFila = matrizAux.split(";");//Obtego las filas por la separacion de ;
             int contador =0;
-            int colum = auxFila[0].split(",").length;
-            for (int j = 0; j < auxFila.length; j++) {
-                int columAux = auxFila[j].split(",").length;
-                if(colum == columAux){
+            int colum = auxFila[0].split(",").length;//Obtengo la cantidad de columnas del primera fila
+            //Para comparar que sea una matriz de n*n
+            for (int j = 0; j < auxFila.length; j++) {//Recoro la matriz
+                int columAux = auxFila[j].split(",").length;//Obtengo la contidad de columnas conforme se mueve en las filas
+                if(colum == columAux){//Compara la contidad de comlumnas de *colum* con *columAux*
                     contador++;
                 }
             }
             if(contador == auxFila.length){
+                
                 for (int j = 0; j < 26; j++) {
                     if(Matrices[j][0] != null){
                         if(Matrices[j][0].equals(nombre)){
