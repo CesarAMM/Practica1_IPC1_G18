@@ -7,16 +7,19 @@
 
 package practica_1_ipc_1;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
-import static practica_1_ipc_1.Funciones_Cesar.Mtriz_transpuesta;
-
+import static practica_1_ipc_1.Funciones_Cesar.*;
 
 public class Practica_1_IPC_1 {
     public static void main(String[] args) {
         int dato = 0;
+        String strRepote ="<h1>Reporte</h1>";
         boolean estado = true;
-        String[][] matriz = new String[26][2];
+        String[][] matriz = new String[27][2];
         do{
             boolean error = true;
             Scanner scanner;
@@ -32,7 +35,8 @@ public class Practica_1_IPC_1 {
                         + "*8) Matriz Inversa            *\n"
                         + "*9) Potencia de una matriz    *\n"
                         + "*10) Determinate de una matriz*\n"
-                        + "*11) Salir                    *\n"
+                        + "*11) Generar Reporte          *\n"
+                        + "*12) Salir                    *\n"
                         + "*******************************\n");
             try {
                 scanner = new Scanner(System.in);
@@ -67,6 +71,29 @@ public class Practica_1_IPC_1 {
                         Ver_Matrices(matriz);
                         break;
                     case 3:
+                        String SMA, strMA;
+                        String SMB, strMB;
+                        do{
+                            SMA = "";
+                            scanner = new Scanner(System.in);
+                            System.out.print("--> Ingrese la matriz 1: ");
+                            SMA = scanner.nextLine();
+                            strMA = ValidarMatriz(matriz, SMA); 
+                        }while(strMA.length() == 0);
+                        do{
+                            SMB = "";
+                            scanner = new Scanner(System.in);
+                            System.out.print("--> Ingrese la matriz 2: ");
+                            SMB = scanner.nextLine();
+                            strMB = ValidarMatriz(matriz, SMB); 
+                        }while(strMB.length() == 0);
+                        String strMSR[] = Suma_Matrices(strMA,strMB);
+                        strRepote+="\n"+strMSR[0].replace("Index_1", SMA).replace("Index_2", SMB)+"\n------------------------------------------------------------------------------\n";
+                        System.out.println(strMSR[0].replace("Index_1", SMA).replace("Index_2", SMB));
+                        if(strMSR[1].length() != 0){
+                            matriz[26][0] ="R";
+                            matriz[26][1] = strMSR[1];
+                        }
                         break;
                     case 4:
                         break;
@@ -75,23 +102,69 @@ public class Practica_1_IPC_1 {
                     case 6:
                         break;
                     case 7:
-                        String strMatriz;
+                        String strMTR;
+                        String indice;
                         do{
+                            indice = "";
                             scanner = new Scanner(System.in);
-                            String indice;
                             System.out.print("--> Ingrese la matriz: ");
                             indice = scanner.nextLine();
-                            strMatriz = ValidarMatriz(matriz, indice); 
-                        }while(strMatriz.length() == 0);
-                        Mtriz_transpuesta(strMatriz);
+                            strMTR = ValidarMatriz(matriz, indice); 
+                        }while(strMTR.length() == 0);
+                        String strMCRT[] = Mtriz_transpuesta(strMTR);
+                        System.out.println(strMCRT[0].replace("Index", indice));
+                        strRepote+= "\n"+strMCRT[0].replace("Index", indice)+"\n------------------------------------------------------------------------------\n";
+                        if(strMCRT[1].length()!=0){
+                            matriz[26][0] = "R";
+                            matriz[26][1] = strMCRT[1];
+                        }
                         break;
                     case 8:
+                        String strMIR;
+                        String index;
+                        do{
+                            index ="";
+                            scanner = new Scanner(System.in);
+                            System.out.print("--> Ingrese la matriz: ");
+                            index = scanner.nextLine();
+                            strMIR = ValidarMatriz(matriz, index); 
+                        }while(strMIR.length() == 0);
+                        String[] strMCIR =MatrizInversa(strMIR);
+                        System.out.println(strMCIR[0].replace("Index", index));
+                        strRepote+="\n"+strMCIR[0].replace("Index", index)+"\n------------------------------------------------------------------------------\n";
+                        if(strMCIR[1].length() != 0){
+                            matriz[26][0] = "R";
+                            matriz[26][1] = strMCIR[1];
+                        }
                         break;
                     case 9:
                         break;
                     case 10:
                         break;
                     case 11:
+                        File f = new File("Reporte.html");
+                        if(!f.exists()){
+                            try {
+                                f.createNewFile();
+                            } catch (IOException e) {
+                                System.out.println(e);
+                            }
+                        }
+                        try {
+                            FileWriter file = new FileWriter(f);
+                            BufferedWriter bw = new BufferedWriter(file);
+                            bw.write(strRepote);
+                            bw.close();
+                            System.out.println("Se a genereado el reporte");
+                        } catch (Exception e) {
+                        }
+                        break;
+                    case 12:
+                        estado = false;
+                        System.out.println("\n\t\t"
+                                + "*******************************\n\t\t"
+                                + "**Gracias Por Participar     **\n\t\t"
+                                + "*******************************\n");
                         break;
                     default:
                         System.out.println("Has ingresado: " + dato + ", Es un rango incorrecto.");
@@ -111,40 +184,49 @@ public class Practica_1_IPC_1 {
                 Cadena = Cadena + input.nextLine() +"\n";
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
-        String Matrices[][] = new String[Filas][2];
-        for (int i = 0; i < Filas; i++) {
-            String nombre = Cadena.split("\n")[i].split(":")[0];//Nombre de la Matriz
-            String matrizAux = Cadena.split("\n")[i].split(":")[1].replace(" ", "");//La matriz
-            String[] auxFila = matrizAux.split(";");//Obtego las filas por la separacion de ;
-            int contador =0;
-            int colum = auxFila[0].split(",").length;//Obtengo la cantidad de columnas del primera fila
-            //Para comparar que sea una matriz de n*n
-            for (int j = 0; j < auxFila.length; j++) {//Recoro la matriz
-                int columAux = auxFila[j].split(",").length;//Obtengo la contidad de columnas conforme se mueve en las filas
-                if(colum == columAux){//Compara la contidad de comlumnas de *colum* con *columAux*
-                    contador++;
-                }
-            }
-            if(contador == auxFila.length){
-                
-                for (int j = 0; j < 26; j++) {
-                    if(Matrices[j][0] != null){
-                        if(Matrices[j][0].equals(nombre)){
-                            Matrices[j][1] = matrizAux;
-                            break;
-                        }
-                    }else{
-                        Matrices[j][0] = nombre;
-                        Matrices[j][1] = matrizAux;
-                        break;
+        String Matrices[][] = new String[27][2];
+        if(Cadena.length() != 0){
+            for (int i = 0; i < Filas; i++) {
+                String nombre = Cadena.split("\n")[i].split(":")[0].trim();//Nombre de la Matriz
+                String matrizAux = Cadena.split("\n")[i].split(":")[1].replace(" ", "");//La matriz
+                String[] auxFila = matrizAux.split(";");//Obtego las filas por la separacion de ;
+                int contador =0;
+                int colum = auxFila[0].split(",").length;//Obtengo la cantidad de columnas del primera fila
+                //Para comparar que sea una matriz de n*n
+                for (int j = 0; j < auxFila.length; j++) {//Recoro la matriz
+                    int columAux = auxFila[j].split(",").length;//Obtengo la contidad de columnas conforme se mueve en las filas
+                    if(colum == columAux){//Compara la contidad de comlumnas de *colum* con *columAux*
+                        contador++;
                     }
                 }
-            }else{
-                System.out.println("La matriz: "+ nombre +". No pudo se ingresada");
+                if(contador == auxFila.length){//Comparar que contador sea igual que las filas
+                    //Iniciamos a buscar en el vector si ya existe el valor
+                    if(!nombre.equalsIgnoreCase("r")){
+                        for (int j = 0; j < 26; j++) {
+                            if(Matrices[j][0] != null){//Comparar si no esta vacio
+                                if(Matrices[j][0].equals(nombre)){//Comparamos si es el mismo nombre
+                                    Matrices[j][1] = matrizAux;
+                                    break;
+                                }
+                            }else{//Dado caso que si este vacio, lo almacenamos
+                                Matrices[j][0] = nombre;
+                                Matrices[j][1] = matrizAux;
+                                break;
+                            }
+                        }
+                    }else{
+                        Matrices[26][0] = nombre;
+                        Matrices[26][1] = matrizAux;
+                    }
+                }else{
+                    System.out.println("La matriz: "+ nombre +". No pudo se ingresada");
+                }
             }
-        }        
+        }else{
+            System.out.println("El archivo esta vacio.");
+        }
         return Matrices;
     }
     
