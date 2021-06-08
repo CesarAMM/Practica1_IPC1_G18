@@ -88,7 +88,7 @@ public class Practica_1_IPC_1 {
                             strMB = ValidarMatriz(matriz, SMB); 
                         }while(strMB.length() == 0);
                         String strMSR[] = Suma_Matrices(strMA,strMB);
-                        strRepote+="\n"+strMSR[0].replace("Index_1", SMA).replace("Index_2", SMB)+"\n------------------------------------------------------------------------------\n";
+                        strRepote+="\n"+strMSR[2].replace("Index_1", SMA).replace("Index_2", SMB)+"<hr>";
                         System.out.println(strMSR[0].replace("Index_1", SMA).replace("Index_2", SMB));
                         if(strMSR[1].length() != 0){
                             matriz[26][0] ="R";
@@ -113,7 +113,7 @@ public class Practica_1_IPC_1 {
                         }while(strMTR.length() == 0);
                         String strMCRT[] = Mtriz_transpuesta(strMTR);
                         System.out.println(strMCRT[0].replace("Index", indice));
-                        strRepote+= "\n"+strMCRT[0].replace("Index", indice)+"\n------------------------------------------------------------------------------\n";
+                        strRepote+= "\n"+strMCRT[2].replace("Index", indice)+"<hr>";
                         if(strMCRT[1].length()!=0){
                             matriz[26][0] = "R";
                             matriz[26][1] = strMCRT[1];
@@ -131,7 +131,7 @@ public class Practica_1_IPC_1 {
                         }while(strMIR.length() == 0);
                         String[] strMCIR =MatrizInversa(strMIR);
                         System.out.println(strMCIR[0].replace("Index", index));
-                        strRepote+="\n"+strMCIR[0].replace("Index", index)+"\n------------------------------------------------------------------------------\n";
+                        strRepote+= strMCIR[2].replace("Index", index);
                         if(strMCIR[1].length() != 0){
                             matriz[26][0] = "R";
                             matriz[26][1] = strMCIR[1];
@@ -142,6 +142,20 @@ public class Practica_1_IPC_1 {
                     case 10:
                         break;
                     case 11:
+                        String ArcchivoHTML = ""
+                                + "<!DOCTYPE html>\n" +"<html lang=\"en\">\n" +"<head>\n"
+                                + "<meta charset=\"UTF-8\">\n"
+                                + "<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n" +
+                                    "<meta http-equiv='X-AU-Compatible' content='ie=edge'>\n" +
+                                    "<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x\" crossorigin=\"anonymous\">\n" +
+                                    "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4\" crossorigin=\"anonymous\"></script>\n" +
+                                    "<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.7.0/css/all.css\" integrity=\"sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ\" crossorigin=\"anonymous\"/>\n" +
+                                    "<title>Reporte</title>" +
+                                "</head>\n" +
+                                "<body class=\"bg-light mb-3 container-fluid\">"
+                                + ""+strRepote+""
+                                + "</body>\n" +
+                                "</html>";
                         File f = new File("Reporte.html");
                         if(!f.exists()){
                             try {
@@ -153,7 +167,7 @@ public class Practica_1_IPC_1 {
                         try {
                             FileWriter file = new FileWriter(f);
                             BufferedWriter bw = new BufferedWriter(file);
-                            bw.write(strRepote);
+                            bw.write(ArcchivoHTML);
                             bw.close();
                             System.out.println("Se a genereado el reporte");
                         } catch (Exception e) {
